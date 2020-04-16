@@ -5,9 +5,9 @@
 
 //Dependencies
 const http = require('http');
-const PORT = '3000';
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
+const config = require('./config');
 
 
 //The server should respond to all requests with a string
@@ -80,9 +80,9 @@ const server = http.createServer((req, res) => {
 });
 
 
-//Start the server and have it listen to port 3000
-server.listen(PORT, () => {
-    console.log(`server is up and running on port, ${PORT} `);
+//Start the server and dynamically assign the port
+server.listen(config.port, () => {
+    console.log(`server is up and running on port, ${config.port} , in ${config.envName} mode`);
 });
 
 

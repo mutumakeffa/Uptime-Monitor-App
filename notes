@@ -1,0 +1,120 @@
+- compilers - Take source code and turn it into an executable file
+(a file full of code the computer can execute, something low level.)
+
+- Transpilers - take source code and tuen it into source code of another type
+(for example turning typescript to javascript or turning saas to css)
+
+- Interpreters - Take source code and directly execute it by taking realtime
+intermediate steps. But, they don't leave anything behind.
+
+- V8 is a server side runtime engine
+
+- V8 is a javascript Engine (Which is a type of javascript Interpreter)
+V8 compiles javascript down to machine code and executes it. 
+It also optimizes code at runtime to make it faster.
+V8 is a standalone application but people rarely interact with it directly.
+V8 is inside chrome.
+SpiderMonkey was developed by Firefox. It was the first Javascript engine.
+
+- Node.js embeds v8 in order to execute JS
+
+- V8 is the car's engine and drive train.
+Node.js is everything else that makes the car.
+You are the driver.
+
+- node.js is a c++ application that embeds V8
+
+- node.js presents itself as two applications
+1: A script processor - 
+call the script processor with node {script name} e.g: node index.js
+passing a script for node to process.
+2: A REPL (Read Eval Print Loop)
+
+- Node is single threaded
+
+- A non blocking IO allows an app to do other things while it's sitting around waiting.
+
+- When you rub a Node application you don't specify all the files in the app,
+you only specify the 'entry file'
+
+- As we know an application contain multiple files. 
+How is Node able to run an application using one file.
+
+- This is thro Node modular system
+
+- module.exports = whatever;
+This makes the current file "export" something
+to any other file who requires this one
+
+- Node's module system creates a dependency tree,
+which tells Node which files are needed to run the application.
+
+- Node's script processor:
+1: Reads in the file you specify
+2: Reads in all the dependencies that file specifies, 
+and all the dependencies of those files, e.t.c
+3: Begins executing the synchronous tasks of those files.
+4: Begins processing the asynchronous taks or "todo list" by repeating the event Loop
+until it has nothing to do.
+
+- The "event loop" is continually checking if there's any new task for 
+Node.js to do
+- Synchronous behaviours are executed by Node immediately they are encountered.
+- Asynchronous behaviours are simply invoked but not immediately executed.
+Instead, these behaviours are added to a queue which lists everything asynchronous 
+that Node.js still has to do. The event loop is Node's way of executing that to do 
+list. Each event might create other events that need to be completed at a later time
+When the event loop has no more tasks left to execute, the app exits.
+background workers and servers are designed to create more tasks and runs indefinitely.
+- Items that can be added to the to do list are invoked with a callback or whose 
+execution is scheduled at a later time such as timeouts and intervals
+-These tasks are called non-blocking.
+- Most programming languages are blocking. If you have a sequence of tasks that need
+to be perfomed, your single threaded application will perform each task in order
+and while it's executing each task, it's incapable of doing anything else.
+- blocking tasks occupy the resources of the thread and the application 
+logic will need to be focused on that task at the expense of everything else 
+it might be doing at the time. 
+- Node.js is single threaded and Node's event loop and '
+non-blocking' IO don't allow Node to do multiple things at one time.
+It just allows Node to schedule things later.
+
+
+- The REPL is an interactive JS runtime. 
+You can write any javascript you want, and have it executed.
+Read, Execute, Print, Loop again to the top (REPL)
+
+
+
+
+====================================================================================
+NODE COMMON CONVENTIONS
+====================================================================================
+
+- testing scripts are commonly held in a /test directory, and are triggered by a 
+'test runner' such as Mocha.
+- common testing files include 
+.travis.yml 
+.jshintrc
+
+- General-purpose task runners often control the whole process
+Grunt and Gulp are the popular.
+
+--- Environments & Configurations ---|
+1: Start your app with 
+NODE_ENV = myEnvironmentNade node index.js
+
+-put your configuration in a file (config.js)
+
+-that switch should read process.env.NODE_ENV
+That switch should read process.env.NODE_ENV t determine the current env 
+and export only the config variable for that env.
+
+2: start your app with every configuration variable you're going to 
+need
+
+
+
+
+
+

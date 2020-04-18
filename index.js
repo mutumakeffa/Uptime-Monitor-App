@@ -5,13 +5,42 @@
 
 //Dependencies
 const http = require('http');
+const https = require('https')
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
+const fs = require('fs');
 
 
-//The server should respond to all requests with a string
-const server = http.createServer((req, res) => {
+//Instantiate the HTTP server
+const httpServer = http.createServer((req, res) => {
+    unifiedServer(req, res)
+
+});
+
+//Start the HTTP server and dynamically assign the port
+httpServer.listen(config.httpPort, () => {
+    console.log(`server is up and running on port, ${config.httpPort} `);
+});
+
+
+//Instantiate the HTTPS server
+const httpsServerOptions = {
+    'key': fs.readFileSync('./https/key.pm'),
+    'cert': fs.readFileSync('./https/cert.pm')
+};
+const httpsServer = https.createServer(httpsServerOptions,(req, res) => {
+    unifiedServer(req, res)
+
+});
+
+//Start the HTTPS server
+httpsServer.listen(config.httpsPort, () => {
+    console.log(`server is up and running on port, ${config.httpsPort} `);
+});
+
+//All the server logic for both https and http server
+const unifiedServer = (req, res) => {
 
     //Get the url and parse it. (true calls the queryString module)
     const parsedUrl = url.parse(req.url,true);
@@ -76,23 +105,15 @@ const server = http.createServer((req, res) => {
         console.log('Returning this response: ',statusCode,payloadString);
 
     });
-
-});
-
-
-//Start the server and dynamically assign the port
-server.listen(config.port, () => {
-    console.log(`server is up and running on port, ${config.port} , in ${config.envName} mode`);
-});
+}
 
 
 //Define the handlers
 const handlers = {};
 
-//sample handler
-handlers.sample = (data, callback) => {
-    //call back a HTTP status code and a payload object
-    callback('406', {'name': 'sample handler'})
+//Ping handler
+handlers.ping = (data, callback) => {
+    callback('200')
 }
 
 //Not found handler
@@ -102,5 +123,5 @@ handlers.notFound = (data, callback) => {
 
 //Define a request router
 const router = {
-    'sample': handlers.sample,
+    'ping': handlers.ping,
 }

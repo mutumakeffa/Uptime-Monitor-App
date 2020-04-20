@@ -4,7 +4,7 @@
 
 
 //container for all the environments
-const environments = {};
+let environments = {};
 
 //Staging (default) object environment
 environments.staging = {

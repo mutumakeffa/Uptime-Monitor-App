@@ -11,6 +11,7 @@ const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
 const fs = require('fs');
 const handlers = require('./lib/handlers');
+const helpers = require('./lib/helpers');
 // const _data = require('./lib/data');
 
 
@@ -106,7 +107,7 @@ const unifiedServer = (req, res) => {
         'queryStringObject': queryStringObject,
         'method': method,
         'headers': headers,
-        'payload': buffer
+        'payload': helpers.parseJsonToObject(buffer)
     }
 
     //Route the request to the chosen handler specified on the route
@@ -136,4 +137,5 @@ const unifiedServer = (req, res) => {
 //Define a request router
 const router = {
     'ping': handlers.ping,
+    'users': handlers.users
 }
